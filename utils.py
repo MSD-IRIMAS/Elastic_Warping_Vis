@@ -1,7 +1,50 @@
+from typing import Tuple
+
 import numpy as np
 import os
 
 from sklearn.preprocessing import LabelEncoder
+
+from aeon.datasets.tsc_datasets import univariate, multivariate
+from aeon.datasets.tser_datasets import tser_soton
+from aeon.datasets.tsf_datasets import tsf_all
+from aeon.datasets import load_classification, load_regression, load_forecasting
+
+
+def load_data(dataset_name: str, split: str, znormalize: bool):
+    """
+    Loads and preprocesses the dataset.
+
+    Parameters
+    ----------
+    -dataset_name: str
+        The name of the dataset to load.
+    split: str:
+        The data split to use (e.g., 'train', 'test').
+    znormalize: bool
+        Whether to apply z-normalization to the data.
+
+    Returns:
+    Tuple[np.ndarray, np.ndarray]
+        The loaded data and labels.
+    """
+    y = None
+
+    if dataset_name in univariate or dataset_name in multivariate:
+        X, y = load_classification(name=dataset_name, split=split)
+    elif dataset_name in tser_soton:
+        X, y = load_regression(name=dataset_name, split=split)
+    elif dataset_name in tsf_all:
+        X = load_forecasting(name=dataset_name)
+    else:
+        raise ValueError("The dataset " + dataset_name + " does not exist in aeon.")
+
+    if znormalize:
+        X = znormalisation(x=X)
+    if y is not None:
+        y = encode_labels(y)
+
+    return X, y
 
 
 def create_directory(directory_path):
@@ -12,11 +55,11 @@ def create_directory(directory_path):
 
 def znormalisation(x):
 
-    stds = np.std(x, axis=1, keepdims=True)
+    stds = np.std(x, axis=2, keepdims=True)
     if len(stds[stds == 0.0]) > 0:
         stds[stds == 0.0] = 1.0
-        return (x - x.mean(axis=1, keepdims=True)) / stds
-    return (x - x.mean(axis=1, keepdims=True)) / (x.std(axis=1, keepdims=True))
+        return (x - x.mean(axis=2, keepdims=True)) / stds
+    return (x - x.mean(axis=2, keepdims=True)) / (x.std(axis=2, keepdims=True))
 
 
 def encode_labels(y):
@@ -26,7 +69,7 @@ def encode_labels(y):
     return labenc.fit_transform(y)
 
 
-def dtw_path_to_plot(path_dtw):
+def alignment_path_to_plot(path_dtw):
 
     axis_x = []
     axis_y = []

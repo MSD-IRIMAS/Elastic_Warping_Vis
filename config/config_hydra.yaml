@@ -1,0 +1,34 @@
+hydra :
+  job :
+    name : dtw-vis
+  run :
+    dir : exps/${hydra.job.name}
+
+output_dir: './'              # output directory
+dataset : "ItalyPowerDemand"            # dataset name to load from aeon
+split: Null                   # either use train/test or both splits
+znormalize: True              # znormalize each time series channel independent
+
+class_x: 0                    # In case of classification, class of first sample
+class_y: 1                    # In case of classification, class of second sample 
+
+show_warping: False           # Show warping connections in pdf
+figsize: [12,10]                 # figure size
+
+metric : "dtw"          # similarity measure to use
+metric_params :               # dictionary with measure parameters
+  window: null                # for all warping based distances
+  p : 2.0                     # for the minkowski, erp, wddtw, wdtw
+  w : null                    # for the minkowski distance
+  itakura_max_slope: null     # for all warping based distances
+  descriptor : "identity"     # for shape_dtw
+  reach : 5                  # for shape_dtw
+  g : 0.05                    # for wdtw
+  epsilon : 1.0               # for lcss, edr
+  g_arr : null                # for erp
+  nu : 0.001                  # for twe
+  lmbda : 1.0                 # for twe
+  independent : True          # for msm
+  c : 1.0                     # for msm
+  warp_penalty : 1.0          # for adtw
+  standardize : True          # for sbd

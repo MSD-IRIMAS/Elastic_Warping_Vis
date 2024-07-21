@@ -1,0 +1,27 @@
+output_dir: ./
+dataset: ItalyPowerDemand
+split: null
+znormalize: true
+class_x: 0
+class_y: 1
+show_warping: false
+figsize:
+- 12
+- 10
+metric: dtw
+metric_params:
+  window: null
+  p: 2.0
+  w: null
+  itakura_max_slope: null
+  descriptor: identity
+  reach: 5
+  g: 0.05
+  epsilon: 1.0
+  g_arr: null
+  nu: 0.001
+  lmbda: 1.0
+  independent: true
+  c: 1.0
+  warp_penalty: 1.0
+  standardize: true
