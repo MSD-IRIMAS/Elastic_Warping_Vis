@@ -9,7 +9,7 @@ This repository contains a project for visualizing warping distortions such as t
 ## Contents
 
 - `main.py`: The main script to run the DTW visualization.
-- `draw_functions.py`: Contains the functions for generating plots and GIFs.
+- `draw_functions.py`: Contains the functions for generating plots and MP4s.
 - `utils.py`: Utility functions used in the project.
 - `config/config_hydra.yaml`: Configuration file for Hydra.
 
