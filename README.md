@@ -76,7 +76,7 @@ The following parameters can be configured in the `config/config_hydra.yaml` fil
 
 Using DTW on ItalyPowerDemand dataset
 
-- In video format: [dtw-italy](exps/dtw-vis/ItalyPowerDemand/dtw.mp4)
+- In video format [download-here](exps/dtw-vis/ItalyPowerDemand/dtw.mp4): ![dtw-italy](exps/dtw-vis/ItalyPowerDemand/dtw.gif)
 - In pdf format: [dtw-italy-pdf](exps/dtw-vis/ItalyPowerDemand/dtw.pdf)
 
 ## Citation
