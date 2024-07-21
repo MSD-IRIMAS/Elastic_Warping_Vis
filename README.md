@@ -96,5 +96,5 @@ If you use this code in your research, please cite this repository:
 
 ## Acknowledgments
 
-@e would like to thank the authors of the UCR, UEA and Monash archives for making the Time Series Classification/Regression/Forecasting datasets publicly available.
+We would like to thank the authors of the UCR, UEA and Monash archives for making the Time Series Classification/Regression/Forecasting datasets publicly available.
 We would also like to thank the Aeon time series machine learning python toolkit for their fast implementation of elastic similarity measures.
