@@ -6,6 +6,17 @@ __pycache__/
 # C extensions
 *.so
 
+*.yaml
+!./.pre-commit-config.yaml
+!config/config_hydra.yaml
+
+*.pdf
+!exps/dtw-vis/ItalyPowerDemand/dtw.pdf
+*.gif
+!exps/dtw-vis/ItalyPowerDemand/dtw.gif
+*.mp4
+!exps/dtw-vis/ItalyPowerDemand/dtw.mp4
+
 # Distribution / packaging
 .Python
 build/
