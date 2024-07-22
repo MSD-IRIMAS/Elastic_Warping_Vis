@@ -21,19 +21,24 @@ def main(args: DictConfig):
     output_dir_dataset = os.path.join(output_dir, dataset)
     create_directory(output_dir_dataset)
 
-    X, y = load_data(dataset_name=dataset, split=args.split, znormalize=args.znormalize)
+    X, y, is_classif = load_data(
+        dataset_name=dataset, split=args.split, znormalize=args.znormalize
+    )
 
-    ts1 = X[y == args.class_x][
-        np.random.randint(low=0, high=len(X[y == args.class_x]), size=1)[0]
-    ]
-    ts2 = X[y == args.class_y][
-        np.random.randint(low=0, high=len(X[y == args.class_y]), size=1)[0]
-    ]
+    if is_classif:
+        ts1 = X[y == args.class_x][
+            np.random.randint(low=0, high=len(X[y == args.class_x]), size=1)[0]
+        ]
+        ts2 = X[y == args.class_y][
+            np.random.randint(low=0, high=len(X[y == args.class_y]), size=1)[0]
+        ]
+    else:
+        ts1 = X[np.random.randint(low=0, high=len(X), size=1)[0]]
+        ts2 = X[np.random.randint(low=0, high=len(X), size=1)[0]]
 
     draw_elastic(
         x=ts1,
         y=ts2,
-        channel_used=0,
         output_dir=output_dir_dataset,
         figsize=args.figsize,
         metric=args.metric,
@@ -47,7 +52,6 @@ def main(args: DictConfig):
         y=ts2,
         figsize=args.figsize,
         fontsize=10,
-        channel_used=0,
         metric_params=args.metric_params,
         metric=args.metric,
     )

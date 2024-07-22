@@ -5,7 +5,7 @@ hydra :
     dir : exps/${hydra.job.name}
 
 output_dir: './'              # output directory
-dataset : "ItalyPowerDemand"            # dataset name to load from aeon
+dataset : "ERing"       # dataset name to load from aeon
 split: Null                   # either use train/test or both splits
 znormalize: True              # znormalize each time series channel independent
 
@@ -22,7 +22,7 @@ metric_params :               # dictionary with measure parameters
   w : null                    # for the minkowski distance
   itakura_max_slope: null     # for all warping based distances
   descriptor : "identity"     # for shape_dtw
-  reach : 5                  # for shape_dtw
+  reach : 15                  # for shape_dtw
   g : 0.05                    # for wdtw
   epsilon : 1.0               # for lcss, edr
   g_arr : null                # for erp
