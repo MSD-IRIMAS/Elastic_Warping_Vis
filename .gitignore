@@ -12,10 +12,16 @@ __pycache__/
 
 *.pdf
 !exps/dtw-vis/ItalyPowerDemand/dtw.pdf
+!exps/dtw-vis/ECGFiveDays/dtw.pdf
+!exps/dtw-vis/ERing/dtw.pdf
 *.gif
 !exps/dtw-vis/ItalyPowerDemand/dtw.gif
+!exps/dtw-vis/ECGFiveDays/dtw.gif
+!exps/dtw-vis/ERing/dtw.gif
 *.mp4
 !exps/dtw-vis/ItalyPowerDemand/dtw.mp4
+!exps/dtw-vis/ECGFiveDays/dtw.mp4
+!exps/dtw-vis/ERing/dtw.mp4
 
 # Distribution / packaging
 .Python
