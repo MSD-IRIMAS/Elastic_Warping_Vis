@@ -19,7 +19,6 @@ from utils import alignment_path_to_plot
 def draw_elastic(
     x: np.ndarray,
     y: np.ndarray,
-    channel_used: int = 0,
     output_dir: str = "./",
     figsize: Tuple[int, int] = None,
     metric: str = "dtw",
@@ -36,8 +35,6 @@ def draw_elastic(
         The first time series to compare. Expected to be a 2D array with shape (channels, length).
     y : np.ndarray
         The second time series to compare. Expected to be a 2D array with shape (channels, length).
-    channel_used : int, optional
-        The index of the channel to be used for comparison. Default is 0.
     output_dir : str, optional
         The directory where the output plot will be saved. Default is "./".
     figsize : Tuple[int, int], optional
@@ -59,8 +56,10 @@ def draw_elastic(
     ------
     A plot comparing the two time series with elastic alignment.
     """
-    if int(x.shape[0]) == 1:
-        channel_used = 0
+    n_channels = int(x.shape[0])
+
+    blue_shades = [(0, 0, i / n_channels) for i in range(1, 1 + n_channels)]
+    red_shades = [(i / n_channels, 0, 0) for i in range(1, 1 + n_channels)]
 
     figsize = (10, 10) if figsize is not None else figsize
 
@@ -83,47 +82,69 @@ def draw_elastic(
 
     lines_for_legend = []
 
-    lines_for_legend.append(
-        ax_x.plot(
-            -x[channel_used, 0 : len(x[channel_used])][::-1],
-            np.arange(0, len(x[channel_used])),
-            lw=4,
-            color="blue",
-            label="Time Series 1",
-        )[0]
-    )
+    for c in range(n_channels):
+        if c == n_channels - 1:
+            lines_for_legend.append(
+                ax_x.plot(
+                    -x[c, 0 : len(x[c])][::-1],
+                    np.arange(0, len(x[c])),
+                    lw=4,
+                    color=blue_shades[c],
+                    label="Time Series 1",
+                )[0]
+            )
+        else:
+            lines_for_legend.append(
+                ax_x.plot(
+                    -x[c, 0 : len(x[c])][::-1],
+                    np.arange(0, len(x[c])),
+                    lw=4,
+                    color=blue_shades[c],
+                )[0]
+            )
 
-    lines_for_legend.append(
-        ax_y.plot(
-            np.arange(0, len(y[channel_used])),
-            y[channel_used, 0 : len(y[channel_used])],
-            lw=4,
-            color="red",
-            label="Time Series 2",
-        )[0]
-    )
+    for c in range(n_channels):
+        if c == n_channels - 1:
+            lines_for_legend.append(
+                ax_y.plot(
+                    np.arange(0, len(y[c])),
+                    y[c, 0 : len(y[c])],
+                    lw=4,
+                    color=red_shades[c],
+                    label="Time Series 2",
+                )[0]
+            )
+        else:
+            lines_for_legend.append(
+                ax_y.plot(
+                    np.arange(0, len(y[c])),
+                    y[c, 0 : len(y[c])],
+                    lw=4,
+                    color=red_shades[c],
+                )[0]
+            )
 
     ax_x.arrow(
-        x=-np.max(x[channel_used]) - 0.5,
-        y=len(x[channel_used]) - 1,
+        x=-np.max(x) - 0.5,
+        y=len(x[0]) - 1,
         dx=0,
-        dy=-len(x[channel_used]) + 1,
+        dy=-len(x[0]) + 1,
         head_width=0.1,
         color="gray",
     )
-    ax_x.text(x=-np.max(x[channel_used]) - 0.7, y=0, s="time", rotation="vertical")
+    ax_x.text(x=-np.max(x) - 0.7, y=0, s="time", rotation="vertical")
 
     ax_y.arrow(
         x=0,
-        y=np.max(y[channel_used]) + 0.5,
-        dx=len(y[channel_used]) - 1,
+        y=np.max(y) + 0.5,
+        dx=len(y[0]) - 1,
         dy=0,
         head_width=0.1,
         color="gray",
     )
     ax_y.text(
-        x=len(y[channel_used]) - 1,
-        y=np.max(y[channel_used]) + 0.7,
+        x=len(y[0]) - 1,
+        y=np.max(y) + 0.7,
         s="time",
         rotation="horizontal",
     )
@@ -142,8 +163,8 @@ def draw_elastic(
 
             con_x = ConnectionPatch(
                 (
-                    -x[channel_used, ::-1][len(x[channel_used]) - 1 - i_mid],
-                    len(x[channel_used]) - 1 - i_mid,
+                    -x[0, ::-1][len(x[0]) - 1 - i_mid],
+                    len(x[0]) - 1 - i_mid,
                 ),
                 (j, i),
                 "data",
@@ -155,7 +176,7 @@ def draw_elastic(
             )
 
             con_y = ConnectionPatch(
-                (j_mid, y[channel_used, j_mid]),
+                (j_mid, y[0, j_mid]),
                 (j, i),
                 "data",
                 "data",
@@ -193,7 +214,6 @@ def draw_elastic_gif(
     x: np.ndarray,
     y: np.ndarray,
     output_dir: str = "./",
-    channel_used: int = 0,
     figsize: Tuple[int, int] = None,
     metric: str = "dtw",
     fontsize: int = 10,
@@ -211,8 +231,6 @@ def draw_elastic_gif(
         The second time series to compare. Expected to be a 2D array with shape (channels, length).
     output_dir : str, optional
         The directory where the output GIF will be saved. Default is './'.
-    channel_used : int, optional
-        The index of the channel to be used for comparison. Default is 0.
     figsize : Tuple[int, int], optional
         The size of the figure in inches (width, height). Default is None, which uses a default size of (10, 10).
     metric : str, optional
@@ -235,6 +253,11 @@ def draw_elastic_gif(
     if figsize is None:
         figsize = (10, 10)
 
+    n_channels = int(x.shape[0])
+
+    blue_shades = [(0, 0, i / n_channels) for i in range(1, 1 + n_channels)]
+    red_shades = [(i / n_channels, 0, 0) for i in range(1, 1 + n_channels)]
+
     _x = np.copy(x)
     _y = np.copy(y)
 
@@ -254,47 +277,69 @@ def draw_elastic_gif(
 
     lines_for_legend = []
 
-    lines_for_legend.append(
-        ax_x.plot(
-            -x[channel_used, 0 : len(x[channel_used])][::-1],
-            np.arange(0, len(x[channel_used])),
-            lw=4,
-            color="blue",
-            label="Time Series 1",
-        )[0]
-    )
+    for c in range(n_channels):
+        if c == n_channels - 1:
+            lines_for_legend.append(
+                ax_x.plot(
+                    -x[c, 0 : len(x[c])][::-1],
+                    np.arange(0, len(x[c])),
+                    lw=4,
+                    color=blue_shades[c],
+                    label="Time Series 1",
+                )[0]
+            )
+        else:
+            lines_for_legend.append(
+                ax_x.plot(
+                    -x[c, 0 : len(x[c])][::-1],
+                    np.arange(0, len(x[c])),
+                    lw=4,
+                    color=blue_shades[c],
+                )[0]
+            )
 
-    lines_for_legend.append(
-        ax_y.plot(
-            np.arange(0, len(y[channel_used])),
-            y[channel_used, 0 : len(y[channel_used])],
-            lw=4,
-            color="red",
-            label="Time Series 2",
-        )[0]
-    )
+    for c in range(n_channels):
+        if c == n_channels - 1:
+            lines_for_legend.append(
+                ax_y.plot(
+                    np.arange(0, len(y[c])),
+                    y[c, 0 : len(y[c])],
+                    lw=4,
+                    color=red_shades[c],
+                    label="Time Series 2",
+                )[0]
+            )
+        else:
+            lines_for_legend.append(
+                ax_y.plot(
+                    np.arange(0, len(y[c])),
+                    y[c, 0 : len(y[c])],
+                    lw=4,
+                    color=red_shades[c],
+                )[0]
+            )
 
     ax_x.arrow(
-        x=-np.max(x[channel_used]) - 0.5,
-        y=len(x[channel_used]) - 1,
+        x=-np.max(x) - 0.5,
+        y=len(x[0]) - 1,
         dx=0,
-        dy=-len(x[channel_used]) + 1,
+        dy=-len(x[0]) + 1,
         head_width=0.1,
         color="gray",
     )
-    ax_x.text(x=-np.max(x[channel_used]) - 0.7, y=0, s="time", rotation="vertical")
+    ax_x.text(x=-np.max(x) - 0.7, y=0, s="time", rotation="vertical")
 
     ax_y.arrow(
         x=0,
-        y=np.max(y[channel_used]) + 0.5,
-        dx=len(y[channel_used]) - 1,
+        y=np.max(y) + 0.5,
+        dx=len(y[0]) - 1,
         dy=0,
         head_width=0.1,
         color="gray",
     )
     ax_y.text(
-        x=len(y[channel_used]) - 1,
-        y=np.max(y[channel_used]) + 0.7,
+        x=len(y[0]) - 1,
+        y=np.max(y) + 0.7,
         s="time",
         rotation="horizontal",
     )
@@ -306,10 +351,46 @@ def draw_elastic_gif(
 
     dtw_plot = ax_matrix.plot(path_dtw_y, path_dtw_x, color="black", lw=4)[0]
 
+    if n_channels > 1:
+        vert_x = ax_x.plot(
+            [
+                -x[:, ::-1][:, len(x[0]) - 1 - optimal_path[0][0]].max(),
+                -x[:, ::-1][:, len(x[0]) - 1 - optimal_path[0][0]].min(),
+            ],
+            [len(x[0]) - 1 - optimal_path[0][0], len(x[0]) - 1 - optimal_path[0][0]],
+            lw=4,
+            color="orange",
+            zorder=2,
+        )[0]
+
+        vert_y = ax_y.plot(
+            [optimal_path[0][1], optimal_path[0][1]],
+            [y[:, optimal_path[0][1]].min(), y[:, optimal_path[0][1]].max()],
+            lw=4,
+            color="orange",
+            zorder=2,
+        )[0]
+    else:
+        vert_x = ax_x.scatter(
+            -x[0, ::-1][len(x[0]) - 1 - optimal_path[0][0]],
+            len(x[0]) - 1 - optimal_path[0][0],
+            s=100,
+            color="orange",
+            zorder=2,
+        )
+
+        vert_y = ax_y.scatter(
+            optimal_path[0][1],
+            y[0, optimal_path[0][1]],
+            s=100,
+            color="orange",
+            zorder=2,
+        )
+
     con_x = ConnectionPatch(
         (
-            -x[channel_used, ::-1][len(x[channel_used]) - 1 - optimal_path[0][0]],
-            len(x[channel_used]) - 1 - optimal_path[0][0],
+            -x[:, ::-1][:, len(x[0]) - 1 - optimal_path[0][0]].max(),
+            len(x[0]) - 1 - optimal_path[0][0],
         ),
         (optimal_path[0][1], optimal_path[0][0]),
         "data",
@@ -321,7 +402,7 @@ def draw_elastic_gif(
     )
 
     con_y = ConnectionPatch(
-        (optimal_path[0][1], y[channel_used, optimal_path[0][1]]),
+        (optimal_path[0][1], y[:, optimal_path[0][1]].min()),
         (optimal_path[0][1], optimal_path[0][0]),
         "data",
         "data",
@@ -347,13 +428,33 @@ def draw_elastic_gif(
 
         dtw_plot.set_data(path_dtw_y[time_mesh], path_dtw_x[time_mesh])
 
+        if n_channels > 1:
+            vert_x.set_data(
+                [
+                    -x[:, ::-1][:, len(x[0]) - 1 - i_x_mid].max(),
+                    -x[:, ::-1][:, len(x[0]) - 1 - i_x_mid].min(),
+                ],
+                [len(x[0]) - 1 - i_x_mid, len(x[0]) - 1 - i_x_mid],
+            )
+
+            vert_y.set_data(
+                [i_y_mid, i_y_mid],
+                [y[:, i_y_mid].min(), y[:, i_y_mid].max()],
+            )
+        else:
+            vert_x.set_offsets(
+                [-x[0, ::-1][len(x[0]) - 1 - i_x_mid], len(x[0]) - 1 - i_x_mid]
+            )
+
+            vert_y.set_offsets([i_y_mid, y[0, i_y_mid]])
+
         con_x.xy1 = (
-            -x[channel_used, ::-1][len(x[channel_used]) - 1 - i_x_mid],
-            len(x[channel_used]) - 1 - i_x_mid,
+            -x[:, ::-1][:, len(x[0]) - 1 - i_x_mid].max(),
+            len(x[0]) - 1 - i_x_mid,
         )
         con_x.xy2 = path_dtw_y[i], path_dtw_x[i]
 
-        con_y.xy1 = i_y_mid, y[channel_used, i_y_mid]
+        con_y.xy1 = i_y_mid, y[:, i_y_mid].min()
         con_y.xy2 = path_dtw_y[i], path_dtw_x[i]
 
         return dtw_plot, con_x, con_y

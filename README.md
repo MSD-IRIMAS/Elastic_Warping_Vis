@@ -45,7 +45,7 @@ The following parameters can be configured in the `config/config_hydra.yaml` fil
 
 - **General Parameters:**
   - `output_dir`: Directory where output plots and MP4s will be saved (default: `./`).
-  - `dataset`: Name of the dataset to use (default: `ItalyPowerDemand`) loaded from aeon-toolkit, see the [classification dataset list](https://github.com/aeon-toolkit/aeon/blob/main/aeon/datasets/tsc_datasets.py), the [regression datasets list](https://github.com/aeon-toolkit/aeon/blob/main/aeon/datasets/tser_datasets.py) and the [forecasting datasets lists](https://github.com/aeon-toolkit/aeon/blob/main/aeon/datasets/tsf_datasets.py).
+  - `dataset`: Name of the dataset to use (default: `ItalyPowerDemand`) loaded from aeon-toolkit, see the [classification dataset list](https://github.com/aeon-toolkit/aeon/blob/main/aeon/datasets/tsc_datasets.py) and the [regression datasets list](https://github.com/aeon-toolkit/aeon/blob/main/aeon/datasets/tser_datasets.py), works with both univariate and multivariate time series datasets.
   - `split`: Dataset split (default: `None`).
   - `znormalize`: Whether to Z-normalize the time series (default: `True`).
   - `class_x`: Class label for the first time series (default: `0`).
@@ -74,10 +74,15 @@ The following parameters can be configured in the `config/config_hydra.yaml` fil
 
 ## Example
 
-Using DTW on ItalyPowerDemand dataset
+Using DTW on [ECGFiveDays](http://timeseriesclassification.com/description.php?Dataset=ECGFiveDays) univariate dataset
 
-- In video format [download-here](exps/dtw-vis/ItalyPowerDemand/dtw.mp4): ![dtw-italy](exps/dtw-vis/ItalyPowerDemand/dtw.gif)
-- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ItalyPowerDemand/dtw.pdf)
+- In video format [download-here](exps/dtw-vis/ECGFiveDays/dtw.mp4): ![dtw-italy](exps/dtw-vis/ECGFiveDays/dtw.gif)
+- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ECGFiveDays/dtw.pdf)
+
+Using DTW on [ERing](http://timeseriesclassification.com/description.php?Dataset=ERing) multivariate dataset
+
+- In video format [download-here](exps/dtw-vis/ERing/dtw.mp4): ![dtw-italy](exps/dtw-vis/ERing/dtw.gif)
+- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ERing/dtw.pdf)
 
 ## Citation
 
@@ -96,5 +101,5 @@ If you use this code in your research, please cite this repository:
 
 ## Acknowledgments
 
-We would like to thank the authors of the UCR, UEA and Monash archives for making the Time Series Classification/Regression/Forecasting datasets publicly available.
+We would like to thank the authors of the UCR, UEA and Monash archives for making the Time Series Classification/Regression datasets publicly available.
 We would also like to thank the Aeon time series machine learning python toolkit for their fast implementation of elastic similarity measures.

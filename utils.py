@@ -7,8 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 
 from aeon.datasets.tsc_datasets import univariate, multivariate
 from aeon.datasets.tser_datasets import tser_soton
-from aeon.datasets.tsf_datasets import tsf_all
-from aeon.datasets import load_classification, load_regression, load_forecasting
+from aeon.datasets import load_classification, load_regression
 
 
 def load_data(dataset_name: str, split: str, znormalize: bool):
@@ -28,23 +27,22 @@ def load_data(dataset_name: str, split: str, znormalize: bool):
     Tuple[np.ndarray, np.ndarray]
         The loaded data and labels.
     """
-    y = None
+    is_classif = True
 
     if dataset_name in univariate or dataset_name in multivariate:
         X, y = load_classification(name=dataset_name, split=split)
     elif dataset_name in tser_soton:
         X, y = load_regression(name=dataset_name, split=split)
-    elif dataset_name in tsf_all:
-        X = load_forecasting(name=dataset_name)
+        is_classif = False
     else:
         raise ValueError("The dataset " + dataset_name + " does not exist in aeon.")
 
     if znormalize:
         X = znormalisation(x=X)
-    if y is not None:
+    if is_classif:
         y = encode_labels(y)
 
-    return X, y
+    return X, y, is_classif
 
 
 def create_directory(directory_path):
