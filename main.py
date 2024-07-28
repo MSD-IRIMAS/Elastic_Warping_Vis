@@ -4,8 +4,8 @@ import numpy as np
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
-from utils import create_directory, load_data
-from draw_functions import draw_elastic, draw_elastic_gif
+from src.utils import create_directory, load_data
+from src.draw_functions import draw_elastic, draw_elastic_gif
 
 
 @hydra.main(config_name="config_hydra.yaml", config_path="config")

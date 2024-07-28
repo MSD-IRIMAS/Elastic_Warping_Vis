@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>61", "wheel", "toml", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elastic-warping-visualization"
+version = "0.0.1"
+description = " Visualization of Elastic Warping of Time Series Data "
+authors = [
+    {name = "Ali Ismail-Fawaz", email = "ali-el-hadi.ismail-fawaz@uha.fr"},
+    {name = "Maxime Devanne", email = "maxime.devanne@uha.fr"},
+    {name = "Stefano Berretti", email = "stefano.berretti@unifi.it"},
+    {name = "Jonathan Weber", email = "jonathan.weber@uha.fr"},
+    {name = "Germain Forestier", email = "germain.forestier@uha.fr"}
+]
+maintainers = [
+    {name = "Ali Ismail-Fawaz", email = "ali-el-hadi.ismail-fawaz@uha.fr"}
+]
+requires-python = ">=3.10"
+license = {text = "GPL-3.0-only"}
+
+keywords = [
+    "data-science",
+    "machine-learning",
+    "data-mining",
+    "time-series",
+    "dynamic-time-warping",
+    "elastic-similarity-measures",
+    "elastic-distances",
+    "time-series-analysis",
+    "time-series-classification",
+    "time-series-regression",
+    "time-series-machine-learning",
+    "data-visualization"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
+]
+
+dependencies = [
+    "numpy==1.26.4",
+    "aeon==0.10.0",
+    "hydra-core==1.3.2",
+    "omegaconf==2.3.0",
+    "matplotlib==3.9.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pytest-xdist",
+    "pytest-timeout",
+    "pytest-rerunfailures",
+    "pre-commit"
+]
+
+[tool.setuptools]
+packages = ["src"]

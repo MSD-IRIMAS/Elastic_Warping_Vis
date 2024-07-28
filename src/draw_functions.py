@@ -13,7 +13,7 @@ from matplotlib.animation import FuncAnimation, FFMpegWriter
 from aeon.distances import cost_matrix
 from aeon.distances._alignment_paths import compute_min_return_path
 
-from utils import alignment_path_to_plot
+from src.utils import alignment_path_to_plot
 
 
 def draw_elastic(
