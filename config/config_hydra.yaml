@@ -5,7 +5,7 @@ hydra :
     dir : exps/${hydra.job.name}
 
 output_dir: './'              # output directory
-dataset : "ERing"       # dataset name to load from aeon
+dataset : "GunPoint"       # dataset name to load from aeon
 split: Null                   # either use train/test or both splits
 znormalize: True              # znormalize each time series channel independent
 
