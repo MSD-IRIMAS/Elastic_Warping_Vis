@@ -13,7 +13,7 @@ from matplotlib.animation import FuncAnimation, FFMpegWriter
 from aeon.distances import cost_matrix
 from aeon.distances._alignment_paths import compute_min_return_path
 
-from elastic_warp_vis.utils import alignment_path_to_plot
+from elastic_warping_vis.utils import alignment_path_to_plot
 
 
 def draw_elastic(
@@ -66,7 +66,10 @@ def draw_elastic(
     _x = np.copy(x)
     _y = np.copy(y)
 
-    _cost_matrix = cost_matrix(x=_x, y=_y, metric=metric, **metric_params)
+    if metric_params is not None:
+        _cost_matrix = cost_matrix(x=_x, y=_y, metric=metric, **metric_params)
+    else:
+        _cost_matrix = cost_matrix(x=_x, y=_y, metric=metric)
     optimal_path = compute_min_return_path(cost_matrix=_cost_matrix)
     path_dtw_x, path_dtw_y = alignment_path_to_plot(path_dtw=optimal_path)
 
@@ -261,7 +264,10 @@ def draw_elastic_gif(
     _x = np.copy(x)
     _y = np.copy(y)
 
-    _cost_matrix = cost_matrix(x=_x, y=_y, metric=metric, **metric_params)
+    if metric_params is not None:
+        _cost_matrix = cost_matrix(x=_x, y=_y, metric=metric, **metric_params)
+    else:
+        _cost_matrix = cost_matrix(x=_x, y=_y, metric=metric)
     optimal_path = compute_min_return_path(cost_matrix=_cost_matrix)
     path_dtw_x, path_dtw_y = alignment_path_to_plot(path_dtw=optimal_path)
 
