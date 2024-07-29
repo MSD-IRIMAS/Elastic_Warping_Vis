@@ -16,6 +16,20 @@ This repository contains a project for visualizing warping distortions such as t
 
 ## Usage
 
+### PyPi Package
+
+Simply install the package as such `pip install elastic_warping_vis` and then use it as follows:
+```Python
+from elastic_warping_vis.utils import load_data
+from elastic_warping_vis.draw_functions import draw_elastic_gif, draw_elastic
+
+# ignore third output, used for dev version
+X, y, _ = load_data(name="ECG200", split="train", znormalize=True)
+draw_elastic(x, y, metric="dtw")
+draw_elastic_gif(x, y, metric="dtw")
+
+```
+
 ### Prerequisites
 
 - Python >= 3.10
