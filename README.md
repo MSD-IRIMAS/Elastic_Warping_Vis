@@ -18,15 +18,18 @@ This repository contains a project for visualizing warping distortions such as t
 
 ### PyPi Package
 
-Simply install the package as such `pip install elastic_warping_vis` and then use it as follows:
+Simply install the package as such `pip install elastic_warping_vis`, latest version being `0.2.0` and then use it as follows:
 ```Python
 from elastic_warping_vis.utils import load_data
 from elastic_warping_vis.draw_functions import draw_elastic_gif, draw_elastic
 
 # ignore third output, used for dev version
-X, y, _ = load_data(name="ECG200", split="train", znormalize=True)
-draw_elastic(x, y, metric="dtw")
-draw_elastic_gif(x, y, metric="dtw")
+X, y, _ = load_data(dataset_name="ECG200", split="train", znormalize=True)
+
+ts1 = X[y == 0][0]
+ts2 = X[y == 1][0]
+draw_elastic(ts1, ts2, metric="dtw")
+draw_elastic_gif(ts1, ts2, metric="dtw")
 
 ```
 
@@ -86,7 +89,7 @@ The following parameters can be configured in the `config/config_hydra.yaml` fil
     - `warp_penalty`: Penalty for warping path length (default: `1.0`).
     - `standardize`: Whether to standardize the time series before DTW (default: `True`).
 
-<!-- ## Example
+## Example
 
 Using DTW on [ECGFiveDays](http://timeseriesclassification.com/description.php?Dataset=ECGFiveDays) univariate dataset
 
@@ -96,7 +99,7 @@ Using DTW on [ECGFiveDays](http://timeseriesclassification.com/description.php?D
 Using DTW on [ERing](http://timeseriesclassification.com/description.php?Dataset=ERing) multivariate dataset
 
 - In video format [download-here](exps/dtw-vis/ERing/dtw.mp4): ![dtw-italy](exps/dtw-vis/ERing/dtw.gif)
-- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ERing/dtw.pdf) -->
+- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ERing/dtw.pdf)
 
 ## Citation
 
