@@ -67,10 +67,10 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["elastic_warp_vis"]
+packages = ["elastic_warping_vis"]
 
 [tool.setuptools.package-data]
-elastic_warp_vis = [
+elastic_warping_vis = [
     "*.pdf",
     "*.mp4",
     "*.gif"
