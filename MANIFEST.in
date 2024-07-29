@@ -1,0 +1,9 @@
+recursive-include elastic_warp_vis *.py
+include LICENSE
+include MANIFEST.in
+include pyproject.toml
+include README.md
+
+recursive-include exps *.pdf
+recursive-include exps *.mp4
+recursive-include exps *.gif
