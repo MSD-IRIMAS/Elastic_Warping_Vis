@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "elastic-warping-visualization"
-version = "0.0.1"
+version = "0.1.0"
 description = " Visualization of Elastic Warping of Time Series Data "
 authors = [
     {name = "Ali Ismail-Fawaz", email = "ali-el-hadi.ismail-fawaz@uha.fr"},
@@ -66,4 +66,4 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["src"]
+packages = ["elastic_warp_vis"]
