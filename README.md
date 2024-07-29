@@ -89,7 +89,7 @@ The following parameters can be configured in the `config/config_hydra.yaml` fil
     - `warp_penalty`: Penalty for warping path length (default: `1.0`).
     - `standardize`: Whether to standardize the time series before DTW (default: `True`).
 
-<!-- ## Example
+## Example
 
 Using DTW on [ECGFiveDays](http://timeseriesclassification.com/description.php?Dataset=ECGFiveDays) univariate dataset
 
@@ -99,7 +99,7 @@ Using DTW on [ECGFiveDays](http://timeseriesclassification.com/description.php?D
 Using DTW on [ERing](http://timeseriesclassification.com/description.php?Dataset=ERing) multivariate dataset
 
 - In video format [download-here](exps/dtw-vis/ERing/dtw.mp4): ![dtw-italy](exps/dtw-vis/ERing/dtw.gif)
-- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ERing/dtw.pdf) -->
+- In pdf format: [dtw-italy-pdf](exps/dtw-vis/ERing/dtw.pdf)
 
 ## Citation
 
