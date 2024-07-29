@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "elastic_warping_vis"
-version = "0.1.0"
+version = "0.2.0"
 description = " Visualization of Elastic Warping of Time Series Data "
 readme = { file = "README.md", content-type = "text/markdown" }
 authors = [
