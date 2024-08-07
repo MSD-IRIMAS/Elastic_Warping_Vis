@@ -118,5 +118,6 @@ If you use this code in your research, please cite this repository:
 
 ## Acknowledgments
 
+This work was supported by the ANR DELEGATION project (grant ANR-21-CE23-0014) of the French Agence Nationale de la Recherche.
 We would like to thank the authors of the UCR, UEA and Monash archives for making the Time Series Classification/Regression datasets publicly available.
 We would also like to thank the Aeon time series machine learning python toolkit for their fast implementation of elastic similarity measures.
