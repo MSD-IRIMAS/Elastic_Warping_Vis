@@ -112,7 +112,7 @@ If you use this code in your research, please cite this repository:
   year         = {2024},
   publisher    = {Github},
   journal      = {GitHub repository},
-  howpublished = {\url{https://github.com/yourusername/dtw-visualization}}
+  howpublished = {\url{https://github.com/MSD-IRIMAS/Elastic_Warping_Vis}}
 }
 ```
 
